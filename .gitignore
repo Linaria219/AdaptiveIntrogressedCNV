@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+.env
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+renv/
+
+# 文件后缀
+*.bam
+*.bed
+*.err
+*.fasta
+*.fastq
+*.gz
+*.jar
+*.list
+*.log
+*.out
+*.q
+*.vcf
+*.txt
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
