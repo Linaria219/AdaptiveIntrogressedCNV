@@ -1,5 +1,5 @@
 #!/bin/bash
-# Workpath=/public/group_data_2023/caizl/b_CNVcalling/lumpy
+# Workpath=path/to/lumpy
 current_date=$(date +"%Y%m%d")
 filename=$1
 filenamebase=$(basename "$filename" .bam)
@@ -24,7 +24,6 @@ samtools sort -@ 20 -o discordants.${current_date}.${filename} discordants.unsor
 rm splitters.unsorted.${current_date}.${filename}
 rm discordants.unsorted.${current_date}.${filename}
 
-# What the hell is: samtools view -r readgroup1 ${filename} \ (in Github)
 samtools view -@ 10 ${filename} \
 	| tail -n+100000 \
 	| pairend_distro.py \

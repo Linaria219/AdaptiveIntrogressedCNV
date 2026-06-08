@@ -1,30 +1,30 @@
 #!/bin/bash
 #SBATCH --job-name=testGSfor40samples
-#SBATCH --partition=wzhcnormal
+#SBATCH --partition=YOUR_name_of_partition
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=32
 #SBATCH -o testGSfor40samples.out
 #SBATCH -e testGSfor40samples1.err
 
 #module load apps/anaconda3/5.2.0
-#conda activate genomeSTRiP_czl
+#conda activate genomeSTRiP
 
 which java > /dev/null || exit 1
 which Rscript > /dev/null || exit 1
 which samtools > /dev/null || exit 1
 
-export SV_DIR="/work/home/caizonglin/genomeSTRiP_main/svtoolkit"
+export SV_DIR="path/to/svtoolkit"
 export PATH=${SV_DIR}/bwa:${PATH}
 export LD_LIBRARY_PATH=${SV_DIR}/bwa:${LD_LIBRARY_PATH}
 
 classpath="${SV_DIR}/lib/SVToolkit.jar:${SV_DIR}/lib/gatk/GenomeAnalysisTK.jar:${SV_DIR}/lib/gatk/Queue.jar"
-rmd="/work/home/caizonglin/genomeSTRiP_main/refmetadata"
-rundir="/work/home/caizonglin/genomeSTRiP_main/test_random_40individuals"
+rmd="path/to/refmetadata"
+rundir="path/to/test_random_40individuals"
 
 java -Xmx16g \
-	-cp /work/home/caizonglin/genomeSTRiP_main/svtoolkit/lib/SVToolkit.jar:/work/home/caizonglin/genomeSTRiP_main/svtoolkit/lib/gatk/GenomeAnalysisTK.jar:/work/home/caizonglin/genomeSTRiP_main/svtoolkit/lib/gatk/Queue.jar \
+	-cp path/to/svtoolkit/lib/SVToolkit.jar:path/to/svtoolkit/lib/gatk/GenomeAnalysisTK.jar:path/to/svtoolkit/lib/gatk/Queue.jar \
 	org.broadinstitute.gatk.queue.QCommandLine \
-	-cp /work/home/caizonglin/genomeSTRiP_main/svtoolkit/lib/SVToolkit.jar:/work/home/caizonglin/genomeSTRiP_main/svtoolkit/lib/gatk/GenomeAnalysisTK.jar:/work/home/caizonglin/genomeSTRiP_main/svtoolkit/lib/gatk/Queue.jar \
+	-cp path/to/svtoolkit/lib/SVToolkit.jar:path/to/svtoolkit/lib/gatk/GenomeAnalysisTK.jar:path/to/svtoolkit/lib/gatk/Queue.jar \
 	-S ${SV_DIR}/qscript/SVPreprocess.q \
 	-S ${SV_DIR}/qscript/SVQScript.q \
 	-gatk ${SV_DIR}/lib/gatk/GenomeAnalysisTK.jar \
