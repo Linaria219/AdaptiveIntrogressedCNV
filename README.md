@@ -1,8 +1,54 @@
 # AdaptiveIntrogressedCNV
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![R](https://img.shields.io/badge/R-4.0+-blue.svg)](https://www.r-project.org/)
+[![Linux](https://img.shields.io/badge/Platform-Linux-orange.svg)]()
+
 # Adaptive Introgressed CNV Analysis Pipeline
 
 ## Overview
-This repository contains an end-to-end bioinformatics pipeline for identifying **high-confidence Copy Number Variations (CNVs)** and investigating their evolutionary significance, specifically focusing on **positive selection** and **archaic introgression**.
+An end-to-end automated pipeline​ for large-scale genomic structural variation analysis.
+The Challenge:​ Processing 2,000+ whole-genome samples​ to identify high-confidence Copy Number Variations (CNVs) while minimizing false positives inherent in single-algorithm approaches.
+The Solution:​ A modular, multi-caller consensus framework written in Python/Bash, designed for HPC cluster environments. It automates data ingestion, parallel processing, statistical validation, and visualization.
+Scale:​ Handles TB-scale datasets with robust error handling and logging.
+
+[Raw WGS Data]
+              |
+              v
+  +-----------------------+
+  |  CNV Callers (x4)     |  <-- Parallel on HPC
+  +-----------------------+
+              |
+              v
+  +-----------------------+
+  |  Consensus Filter     |  <-- >=2 callers required
+  +-----------------------+
+              |
+              v
+  +-----------------------+
+  |  Quantitative dCGH    |  <-- Copy Number Estimation
+  +-----------------------+
+              |
+              v
+  +-----------------------+
+  |  Stratification       |  <-- Copy Number Feature
+  +-----------------------+
+              |
+              v
+  +-----------------------+
+  |  Selection/Introgression|
+  +-----------------------+
+              |
+              v
+        [Final Report]
+
+## Tech Stack & Engineering Evidence
+- **Languages:** Python (Pandas, NumPy, SciPy), R (ggplot2, data.table), Bash/Shell.
+- **Environment:** Linux (CentOS/Ubuntu), HPC Clusters, SLURM Job Scheduler.
+- **Data Scale:** 2000+ WGS samples(>=30x), ~200TB raw data processed.
+- **Engineering Practices:**
+  - Modular code structure for maintainability.
+  - Batch automation scripts for cluster computing.
+  - Standardized output formats (BED, VCF, CSV).
 
 ## Pipeline Architecture
 The workflow is modularized into six stages:
@@ -29,7 +75,10 @@ The workflow is modularized into six stages:
 - **Goal**: Determines if high-confidence CNVs reside within regions of archaic introgression.
 
 ### 6. Utilities (`Tools/`)
-- Helper scripts for data parsing, format conversion, and visualization.
+- Auxiliary scripts used for data parsing, format conversion, and information collection.
+
+### 7. Visualization (`R/`)
+- Helper scripts for visualization.
 
 ## Tech Stack & Evidence
 - **Languages**: Python, R, Bash (Linux environment).
