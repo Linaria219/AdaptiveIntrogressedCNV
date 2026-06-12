@@ -28,7 +28,7 @@ graph LR
     end
     
     subgraph S3[Stage 3: Stratification]
-        E[V_ST Statistic<br>Mann-Whitney U Test (MWU)<br>D_median Statistic]
+        E["V_ST Statistic<br>Mann-Whitney U Test (MWU)<br>D_median Statistic"]
     end
     
     subgraph S4[Stage 4: Evolutionary Insight]
