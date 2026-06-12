@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="/work/home/caizonglin/delly0.7.2/sampleANDpath.txt"
-output_dir="/work/home/caizonglin/delly0.7.2/sample1_10"
-ref="/work/home/caizonglin/backup_info/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+input_file="path/to/sampleANDpath.txt"
+output_dir="path/to/output"
+ref="path/to/reference.fa"
 
 while IFS=$'\t' read -r sample bam_path; do
   cat << EOF > ${output_dir}/${sample}_delly.slurm
