@@ -28,12 +28,12 @@ graph LR
     end
     
     subgraph S3[Stage 3: Stratification]
-        E[V<sub>ST</sub> Statistic<br>Mann-Whitney U Test (MWU)<br>D<sub>median</sub> Statistic]
+        E[V_ST Statistic<br>Mann-Whitney U Test (MWU)<br>D_median Statistic]
     end
     
     subgraph S4[Stage 4: Evolutionary Insight]
         F[Positive Selection Scan<br>PBS Statistic]
-        G[Archaic Introgression<br>f<sub>D</sub> Statistic]
+        G[Archaic Introgression<br>f_D Statistic]
     end
     
     H[High-Confidence CNV Report]
