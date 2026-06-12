@@ -59,7 +59,7 @@ graph LR
   - Standardized output formats (BED, VCF, CSV).
 
 ## Pipeline Architecture
-The workflow is modularized into six stages:
+The workflow is modularized into 7 stages:
 
 ### 1. CNV Discovery & Consensus (`CNVcallers/`)
 - **Input**: Raw WGS/WES data.
