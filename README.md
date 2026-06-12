@@ -11,35 +11,45 @@ The Challenge:​ Processing 2,000+ whole-genome samples​ to identify high-con
 The Solution:​ A modular, multi-caller consensus framework written in Python/Bash, designed for HPC cluster environments. It automates data ingestion, parallel processing, statistical validation, and visualization.
 Scale:​ Handles TB-scale datasets with robust error handling and logging.
 
-[Raw WGS Data]
-              |
-              v
-  +-----------------------+
-  |  CNV Callers (x4)     |  <-- Parallel on HPC
-  +-----------------------+
-              |
-              v
-  +-----------------------+
-  |  Consensus Filter     |  <-- >=2 callers required
-  +-----------------------+
-              |
-              v
-  +-----------------------+
-  |  Quantitative dCGH    |  <-- Copy Number Estimation
-  +-----------------------+
-              |
-              v
-  +-----------------------+
-  |  Stratification       |  <-- Copy Number Feature
-  +-----------------------+
-              |
-              v
-  +-----------------------+
-  |  Selection/Introgression|
-  +-----------------------+
-              |
-              v
-        [Final Report]
+## Pipeline Flowchart
+
+```mermaid
+graph TD
+    classDef process fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef data fill:#fff9c4,stroke:#fbc02d,stroke-width:1px;
+
+    A([<b>Raw WGS/WES Data</b>]):::data
+    
+    subgraph S1 [Stage 1: Discovery]
+        B[CNV Callers<br/><i>x4 Parallel Jobs on HPC</i>]
+    end
+    
+    C{Consensus Filter<br/><b>>=2 Callers?</b>}:::process
+    
+    subgraph S2 [Stage 2: Quantification]
+        D[dCGH Profiling<br/><i>Continuous CN Estimation</i>]
+    end
+    
+    E[Stratification<br/><i>Classify by CN Patterns<br/>(Fixed/Polymorphic)</i>]:::process
+    
+    subgraph S3 [Stage 3: Evolutionary Insight]
+        F[Positive Selection Scan<br/><i>iHS / Tajima's D</i>]
+        G[Archaic Introgression<br/><i>100-SNV Sliding Window</i>]
+    end
+    
+    H([<b>High-Confidence CNV Report</b>]):::data
+
+    %% Links
+    A --> B
+    B --> C
+    C -->|No (Discard)| X[Noise Filtered Out]
+    C -->|Yes (High-Confidence BED)| D
+    D --> E
+    E --> F
+    E --> G
+    F --> H
+    G --> H
+```
 
 ## Tech Stack & Engineering Evidence
 - **Languages:** Python (Pandas, NumPy, SciPy), R (ggplot2, data.table), Bash/Shell.
