@@ -14,36 +14,34 @@ Scale:​ Handles TB-scale datasets with robust error handling and logging.
 ## Pipeline Flowchart
 
 ```mermaid
-graph TD
-    classDef process fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
-    classDef data fill:#fff9c4,stroke:#fbc02d,stroke-width:1px;
-
-    A([<b>Raw WGS/WES Data</b>]):::data
+graph LR
+    A[Raw WGS Data]
     
-    subgraph S1 [Stage 1: Discovery]
-        B[CNV Callers<br/><i>x4 Parallel Jobs on HPC</i>]
+    subgraph S1[Stage 1: Discovery]
+        B[Delly<br>Lumpy<br>GenomeSTRiP<br>Whamg<br>x4 Parallel Jobs on HPC]
     end
     
-    C{Consensus Filter<br/><b>>=2 Callers?</b>}:::process
+    C{Consensus Filter<br>>=2 Callers?}
     
-    subgraph S2 [Stage 2: Quantification]
-        D[dCGH Profiling<br/><i>Continuous CN Estimation</i>]
+    subgraph S2[Stage 2: Quantification]
+        D[dCGH Profiling<br>Population Copy Number Distribution]
     end
     
-    E[Stratification<br/><i>Classify by CN Patterns<br/>(Fixed/Polymorphic)</i>]:::process
-    
-    subgraph S3 [Stage 3: Evolutionary Insight]
-        F[Positive Selection Scan<br/><i>iHS / Tajima's D</i>]
-        G[Archaic Introgression<br/><i>100-SNV Sliding Window</i>]
+    subgraph S3[Stage 3: Stratification]
+        E[V<sub>ST</sub> Statistic<br>Mann-Whitney U Test (MWU)<br>D<sub>median</sub> Statistic]
     end
     
-    H([<b>High-Confidence CNV Report</b>]):::data
-
-    %% Links
+    subgraph S4[Stage 4: Evolutionary Insight]
+        F[Positive Selection Scan<br>PBS Statistic]
+        G[Archaic Introgression<br>f<sub>D</sub> Statistic]
+    end
+    
+    H[High-Confidence CNV Report]
+    
     A --> B
     B --> C
-    C -->|No (Discard)| X[Noise Filtered Out]
-    C -->|Yes (High-Confidence BED)| D
+    C -->|No| X[Noise Filtered Out]
+    C -->|Yes| D
     D --> E
     E --> F
     E --> G
